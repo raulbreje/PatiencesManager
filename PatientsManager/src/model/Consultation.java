@@ -1,31 +1,32 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Consultation {
+public class Consultation implements IAppElement{
 	private String consID;
-	private String PatientSSN;
+	private String patientSSN;
 	private String diag;
 	private List<String> meds;
-	private String consultation_date;
+	private LocalDate consultation_date;
 	
 	public Consultation() 
 	{ 
-		this.consID = new String();
-		this.PatientSSN = new String();
-		this.diag = new String();
-		this.meds = new ArrayList<String>();
-		this.consultation_date = new String();
+		consID = "default_consID";
+		patientSSN = "default_patientSSN";
+		diag = "default_diag";
+		meds = new ArrayList<>();
+		consultation_date = LocalDate.now();
 	};
 	
-	public Consultation (String consID, String PatientSSN, String diag, List<String> meds, String date)
+	public Consultation (String consID, String PatientSSN, String diag, List<String> meds, LocalDate date)
 	{
 		this.consID = consID;
-		this.PatientSSN = PatientSSN;
+		this.patientSSN = PatientSSN;
 		this.diag = diag;
 		this.meds = meds;
-		this.consultation_date = date;
+		consultation_date = date;
 	}
 	
 	public String getConsID() {
@@ -36,10 +37,10 @@ public class Consultation {
 	}
 	
 	public String getPatientSSN() {
-		return PatientSSN;
+		return patientSSN;
 	}
 	public void setPatientSSN(String patientSSN) {
-		PatientSSN = patientSSN;
+		this.patientSSN = patientSSN;
 	}
 	public String getDiag() {
 		return diag;
@@ -53,29 +54,30 @@ public class Consultation {
 	public void setMeds(List<String> meds) {
 		this.meds = meds;
 	}
-	public String getConsultation_date() {
+	public LocalDate getConsultation_date() {
 		return consultation_date;
 	}
-	public void setConsultation_date(String consultation_date) {
-		this.consultation_date = consultation_date;
+	public void setConsultation_date(LocalDate date) {
+		consultation_date = date;
 	}
-	
-	public String toString()
-	{
-		String res;
-		 res = consID + "," + PatientSSN + ',' + diag + ",";
-		 
-		 for (int i = 1; i<meds.size()-1;i++)
-		 {
-			 res = res + meds.get(i) + "+";
-		 }
-		 
-		 res = res.substring(0, res.length()-1);
-		 
-		 res = res + "," + consultation_date;
-		 
-		 return res;
-		
+
+    public String toString()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.append(consID);
+        sb.append(", ");
+        sb.append(patientSSN);
+        sb.append(", ");
+        sb.append(diag);
+        sb.append(", ");
+        for(String med : meds){
+            sb.append(med);
+            sb.append(" + ");
+        }
+        sb.substring(0, sb.length()-2);
+        sb.append(", ");
+        sb.append(consultation_date.toString());
+        return sb.toString();
 	}
 
 }

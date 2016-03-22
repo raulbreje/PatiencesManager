@@ -1,8 +1,8 @@
 package model;
 
-public class Patient {
-	private String Patient_ID;
-	private String Name;
+public class Patient implements IAppElement{
+	private String patientId;
+	private String name;
 	private String SSN;
 	private String address;
 	private int consNum;
@@ -11,27 +11,27 @@ public class Patient {
 	
 	public Patient() {}
 	
-	public Patient(String Name, String SSN, String address) 
+	public Patient(String name, String SSN, String address)
 	{
-			this.Patient_ID = SSN;
-			this.Name = Name;
+			patientId = SSN;
+			this.name = name;
 			this.SSN = SSN;
 			this.address = address;	
-			this.consNum = 0;
+			consNum = 0;
 	}
 	
 	/** Getters and setters */
-	public String getPatient_ID() {
-		return Patient_ID;
+	public String getPatientID() {
+		return patientId;
 	}
-	public void setPatient_ID(String patient_ID) {
-		Patient_ID = patient_ID;
+	public void setPatientID(String patientId) {
+		this.patientId = patientId;
 	}
 	public String getName() {
-		return Name;
+		return name;
 	}
 	public void setName(String name) {
-		Name = name;
+		this.name = name;
 	}
 	public String getSSN() {
 		return SSN;
@@ -47,16 +47,21 @@ public class Patient {
 	}
 	public void setConsNum(int num)
 	{
-		this.consNum = num;
+		consNum = num;
 	}
 	public int getConsNum()
 	{
-		return this.consNum;
+		return consNum;
 	}
 	
 	/** Others */
 	public String toString() {
-	    return Name + "," + SSN + "," +address;
-	//	return Name + "," + consNum;
+		StringBuilder sb = new StringBuilder();
+		sb.append(name);
+		sb.append(", ");
+		sb.append(SSN);
+		sb.append(", ");
+		sb.append(address);
+		return sb.toString();
 	}
 }
