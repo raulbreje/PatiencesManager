@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exception.PatientsManagerException;
-import model.IAppElement;
+import exception.ValidatorException;
+import model.*;
 import persistence.IRepository;
 import persistence.Repository;
-
-import model.Consultation;
-import model.Patient;
 
 public class doctorController implements IController {
 
@@ -62,7 +60,7 @@ public class doctorController implements IController {
         return repository;
     }
 
-    public void add(IAppElement elem) throws PatientsManagerException {
+    public void add(IAppElement elem) throws PatientsManagerException, ValidatorException {
         if (elem instanceof Patient) {
             addPatient2((Patient) elem);
         } else if (elem instanceof Consultation) {
@@ -70,6 +68,40 @@ public class doctorController implements IController {
         } else {
             throw new PatientsManagerException("Whatever. Contact your administrator.");
         }
+    }
+
+    private void addPatient2(Patient p) throws ValidatorException, PatientsManagerException {
+        Validator.validatePerson(p);
+        patients.add(p);
+        if (getPatientBySSN2(p.getSSN()) == null){
+            repository.save(AppObjectTypes.PATIENT, p);
+        }
+    }
+
+    private void addConsultation2(Consultation c) throws PatientsManagerException {
+        Validator.validateConsultation(c);
+        consultations.add(c);
+        repository.save(AppObjectTypes.CONSULTATION, c);
+
+        if (c.getMeds() == null)
+            return;
+
+        if (c.getConsID() != null && c.getPatientSSN() != null && c.getDiag() != null &&
+                c.getMeds().size() != 0 && this.getPatientBySSN(c.getPatientSSN()) > -1
+                && this.getConsByID(c.getConsID()) == -1) {
+            ConsultationList.add(c);
+            try {
+                rep.saveConsultationToFile(c);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Patient p = new Patient();
+            p = this.getPatientList().get(this.getPatientBySSN(c.getPatientSSN()));
+            p.setConsNum(p.getConsNum() + 1);
+        }
+
+        //else System.out.println(c.getConsID() + " " + this.getPatientBySSN(c.getPatientSSN()) + " " + this.getConsByID(c.getConsID()));
     }
 
     @Deprecated
