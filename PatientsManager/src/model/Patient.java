@@ -1,5 +1,7 @@
 package model;
 
+import java.util.StringJoiner;
+
 public class Patient implements IAppElement{
 	private String patientId;
 	private String name;
@@ -56,12 +58,8 @@ public class Patient implements IAppElement{
 	
 	/** Others */
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(name);
-		sb.append(", ");
-		sb.append(SSN);
-		sb.append(", ");
-		sb.append(address);
-		return sb.toString();
+		StringJoiner sj = new StringJoiner(", ");
+		sj.add(name).add(SSN).add(address);
+		return sj.toString();
 	}
 }

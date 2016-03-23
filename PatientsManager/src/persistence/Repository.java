@@ -20,8 +20,10 @@ import model.Patient;
 import sun.rmi.transport.ObjectTable;
 import util.AppUtils;
 
+import javax.xml.bind.annotation.XmlIDREF;
 
-public class Repository {
+
+public class Repository implements IRepository {
 
     private String patients; // list of patients
     private String consultations; // list of consultation
@@ -31,7 +33,7 @@ public class Repository {
         this.consultations = consultations;
     }
 
-    public void cleanFiles() throws PatientsManagerException {
+    public void cleanFiles2() throws PatientsManagerException {
         try {
             Files.deleteIfExists(Paths.get(patients));
             Files.deleteIfExists(Paths.get(consultations));
@@ -61,7 +63,7 @@ public class Repository {
         return listOfPatients;
     }
 
-    public List<Patient> getPatientList() throws PatientsManagerException {
+    public List<Patient> getPatients() throws PatientsManagerException {
         List<Patient> lp = new ArrayList<>();
         List<String> tokens = load(AppObjectTypes.PATIENT);
         for (String elem : tokens) {
@@ -71,7 +73,7 @@ public class Repository {
         return lp;
     }
 
-    public List<Consultation> getConsultationList() throws PatientsManagerException {
+    public List<Consultation> getConsultations() throws PatientsManagerException {
         List<Consultation> lp = new ArrayList<>();
         List<String> tokens = load(AppObjectTypes.CONSULTATION);
         for (String elem : tokens) {
@@ -104,17 +106,24 @@ public class Repository {
             Patient p = (Patient) elem;
             List<Patient> lp = getPatientList();
             lp.add(p);
-                FileWriter fw = new FileWriter(fileName);
-                //@formatter:off
-                Stream<Patient> lines = lp.stream();
-                lines.forEach(package -> writeToFile(fw, package));
-                //@formatter:on
-                fw.close();
-                lines.close();
+            List<String> lps = new ArrayList<>();
+            lp.stream().map(String::valueOf).forEach(lps::add);
+            try {
+                Files.write(Paths.get(fileName), lps);
+            } catch (IOException e) {
+                throw new PatientsManagerException("Whatever. Contact your administrator.");
             }
         } else if (elem instanceof Consultation) {
             Consultation c = (Consultation) elem;
-
+            List<Consultation> lc = getConsultationList();
+            lc.add(c);
+            List<String> lcs = new ArrayList<>();
+            lc.stream().map(String::valueOf).forEach(lcs::add);
+            try {
+                Files.write(Paths.get(fileName), lcs);
+            } catch (IOException e) {
+                throw new PatientsManagerException("Whatever. Contact your administrator.");
+            }
         } else {
             throw new PatientsManagerException("Whatever. Contact your administrator.");
         }
@@ -122,10 +131,127 @@ public class Repository {
 
     }
 
+    @Deprecated
+    public void cleanFiles() {
+        FileWriter fw;
+        try {
+            fw = new FileWriter(patients);
+            PrintWriter out = new PrintWriter(fw);
+            out.print("");
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        FileWriter fwc;
+        try {
+            fwc = new FileWriter(consultations);
+            PrintWriter out = new PrintWriter(fwc);
+            out.print("");
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Deprecated
+    public String[] getPatientsFromFile() throws IOException {
+        int n = 0;
+        BufferedReader in = new BufferedReader(new FileReader(patients));
+        while ((in.readLine()) != null) {
+            n++;
+        }
+        in.close();
+
+        String[] la = new String[n];
+        String s = new String();
+        int i = 0;
+        in = new BufferedReader(new FileReader(patients));
+        while ((s = in.readLine()) != null) {
+            la[i] = s;
+            i++;
+        }
+        in.close();
+        return la;
+    }
+
+    @Deprecated
+    public String[] getConsultationsFromFile() throws IOException {
+        int n = 0;
+        BufferedReader in = new BufferedReader(new FileReader(consultations));
+        while ((in.readLine()) != null) {
+            n++;
+        }
+        in.close();
+
+        String[] la = new String[n];
+        String s = new String();
+        int i = 0;
+        in = new BufferedReader(new FileReader(consultations));
+        while ((s = in.readLine()) != null) {
+            la[i] = s;
+            i++;
+        }
+        in.close();
+        return la;
+    }
+
+    @Deprecated
+    public List<Patient> getPatientList() {
+        List<Patient> lp = new ArrayList<Patient>();
+        try {
+            String[] tokens = getPatientsFromFile();
+
+            String tok = new String();
+            String[] pat;
+            int i = 0;
+            while (i < tokens.length) {
+                tok = tokens[i];
+                pat = tok.split(",");
+                lp.add(new Patient(pat[0], pat[1], pat[2]));
+                i = i + 1;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return lp;
+    }
+
+    @Deprecated
+    public List<Consultation> getConsultationList() {
+        List<Consultation> lp = new ArrayList<Consultation>();
+        try {
+            String[] tokens = getConsultationsFromFile();
+
+            String tok = new String();
+            String[] cons;
+            String[] meds;
+            List<String> med = new ArrayList<String>();
+            int i = 0;
+            while (i < tokens.length) {
+                tok = tokens[i];
+                cons = tok.split(",");
+                Consultation c = new Consultation(cons[0], cons[1], cons[2], med, cons[4]);
+                meds = cons[3].split("\\+");
+                for (int j = 0; j < meds.length - 1; j++) {
+                    c.getMeds().add(meds[j]);
+                }
+                lp.add(c);
+                i = i + 2;
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return lp;
+    }
+
+    @Deprecated
     public void savePatientToFile(Patient p) throws IOException        // save to file
     {
-
-
         int n = 0;
         BufferedReader in = new BufferedReader(new FileReader(patients));
         while ((in.readLine()) != null)
@@ -148,6 +274,7 @@ public class Repository {
         out.close();
     }
 
+    @Deprecated
     public void saveConsultationToFile(Consultation c) throws IOException        // save to file
     {
         int n = 0;
