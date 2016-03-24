@@ -22,17 +22,21 @@ public class doctorController implements IController {
      * Constructors
      */
 
-    public doctorController(IRepository repository) throws PatientsManagerException {
+    public doctorController(IRepository repository){
         this.repository = repository;
-        patients = repository.getPatients();
-        consultations = repository.getConsultations();
     }
 
-    public List<Patient> getPatients() {
+    public List<Patient> getPatients() throws PatientsManagerException {
+        if (patients == null){
+            patients = repository.getPatients();
+        }
         return patients;
     }
 
-    public List<Consultation> getConsultations() {
+    public List<Consultation> getConsultations() throws PatientsManagerException {
+        if (consultations == null){
+            consultations = repository.getConsultations();
+        }
         return consultations;
     }
 

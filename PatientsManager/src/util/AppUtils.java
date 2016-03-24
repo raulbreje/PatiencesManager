@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class AppUtils {
 
-    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     public static boolean isNull(String s){
         if (s == null){

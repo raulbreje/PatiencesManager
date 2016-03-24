@@ -15,9 +15,9 @@ import java.util.List;
  */
 public interface IController {
 
-    List<Patient> getPatients();
+    List<Patient> getPatients() throws PatientsManagerException;
 
-    List<Consultation> getConsultations();
+    List<Consultation> getConsultations() throws PatientsManagerException;
 
     void setConsultations(List<Consultation> consultations);
 
