@@ -9,4 +9,11 @@ public class AppUtils {
 
     public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 
+    public static boolean isNull(String s){
+        if (s == null){
+            return true;
+        }
+        return false;
+    }
+
 }

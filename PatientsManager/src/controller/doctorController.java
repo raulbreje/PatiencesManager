@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import exception.PatientsManagerException;
@@ -9,6 +10,7 @@ import exception.ValidatorException;
 import model.*;
 import persistence.IRepository;
 import persistence.Repository;
+import util.AppUtils;
 
 public class doctorController implements IController {
 
@@ -52,8 +54,8 @@ public class doctorController implements IController {
             if (ID.equals(c.getConsID())) {
                 return c;
             }
-            return null;
         }
+        return null;
     }
 
     public IRepository getRepository2() {
@@ -72,37 +74,46 @@ public class doctorController implements IController {
 
     private void addPatient2(Patient p) throws ValidatorException, PatientsManagerException {
         Validator.validatePerson(p);
-        patients.add(p);
-        if (getPatientBySSN2(p.getSSN()) == null){
+        if (getPatientBySSN2(p.getSSN()) == null) {
+            patients.add(p);
             repository.save(AppObjectTypes.PATIENT, p);
+        } else {
+            throw new PatientsManagerException("Patient don't exists. Contact your administrator.");
         }
     }
 
-    private void addConsultation2(Consultation c) throws PatientsManagerException {
+    private void addConsultation2(Consultation c) throws PatientsManagerException, ValidatorException {
         Validator.validateConsultation(c);
-        consultations.add(c);
-        repository.save(AppObjectTypes.CONSULTATION, c);
-
-        if (c.getMeds() == null)
-            return;
-
-        if (c.getConsID() != null && c.getPatientSSN() != null && c.getDiag() != null &&
-                c.getMeds().size() != 0 && this.getPatientBySSN(c.getPatientSSN()) > -1
-                && this.getConsByID(c.getConsID()) == -1) {
-            ConsultationList.add(c);
-            try {
-                rep.saveConsultationToFile(c);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Patient p = new Patient();
-            p = this.getPatientList().get(this.getPatientBySSN(c.getPatientSSN()));
+        if (getPatientBySSN2(c.getPatientSSN()) != null && getConsultationByID(c.getConsID()) == null) {
+            consultations.add(c);
+            repository.save(AppObjectTypes.CONSULTATION, c);
+            Patient p = getPatientBySSN2(c.getPatientSSN());
             p.setConsNum(p.getConsNum() + 1);
+        } else {
+            throw new PatientsManagerException("Consultation ID already exists. Contact your administrator.");
         }
-
-        //else System.out.println(c.getConsID() + " " + this.getPatientBySSN(c.getPatientSSN()) + " " + this.getConsByID(c.getConsID()));
     }
+
+    public List<Patient> getPatientsWithDisease2(String disease) throws PatientsManagerException {
+        List<Consultation> cs = getConsultations();
+        List<Patient> pat = new ArrayList<>();
+        List<Patient> sortedPat = new ArrayList<>();
+        if (!AppUtils.isNull(disease)) {
+            cs.stream().filter(c -> c.getDiag().toLowerCase().contains(disease.toLowerCase())).forEach(c -> {
+                Patient p = getPatientBySSN2(c.getPatientSSN());
+                if (!pat.contains(p)) {
+                    pat.add(p);
+                }
+            });
+        } else {
+            throw new PatientsManagerException("Disease null. Contact your administrator.");
+        }
+        Comparator<Patient> byConsNumber = (p1, p2) -> Integer.compare(
+                p1.getConsNum(), p2.getConsNum());
+        pat.stream().sorted(byConsNumber)
+                .forEach(sp -> sortedPat.add(sp));
+    return sortedPat;
+}
 
     @Deprecated
     private List<Patient> PatientList;
@@ -187,6 +198,7 @@ public class doctorController implements IController {
 
     // adding of a new consultation for a patient (consultation date, diagnostic, prescription drugs)
 
+    @Deprecated
     public void addConsultation(Consultation c) {
         if (c.getMeds() == null)
             return;
@@ -209,6 +221,7 @@ public class doctorController implements IController {
         //else System.out.println(c.getConsID() + " " + this.getPatientBySSN(c.getPatientSSN()) + " " + this.getConsByID(c.getConsID()));
     }
 
+    @Deprecated
     public List<Patient> getPatientsWithDisease(String disease) {
         List<Consultation> c = this.getConsultationList();
         List<Patient> p = new ArrayList<Patient>();
