@@ -45,8 +45,8 @@ public class View implements IView {
     }
 
     public void run2() {
-        System.out.println(menu());
         while (true) {
+            System.out.println(menu());
             int cmd = keyboard.nextInt();
             switch (cmd) {
                 case 0:
@@ -63,7 +63,7 @@ public class View implements IView {
                     try {
                         controller2.add(p);
                     } catch (Exception e) {
-                        System.err.println(e);
+                        System.err.println(e + " one");
                     }
                     break;
                 case 2:
@@ -84,7 +84,7 @@ public class View implements IView {
                         Consultation c = new Consultation(consID.trim(), patSSN.trim(), diag.trim(), m, date);
                         controller2.add(c);
                     } catch (Exception e) {
-                        System.err.println(e);
+                        System.err.println(e + " two");
                     }
                     break;
                 case 3:
@@ -93,7 +93,7 @@ public class View implements IView {
                     try {
                         System.out.println(controller2.getPatientsWithDisease2(diag2.trim()));
                     } catch (Exception e) {
-                        System.err.println(e);
+                        System.err.println(e + " three");
                     }
                     break;
                 default:
@@ -106,8 +106,8 @@ public class View implements IView {
 
     @Deprecated
     public void run() {
-        System.out.println(menu());
         while (true) {
+            System.out.println(menu());
             int cmd = keyboard.nextInt();
             switch (cmd) {
                 case 0:

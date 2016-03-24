@@ -44,8 +44,8 @@ public class doctorController implements IController {
         this.consultations = consultations;
     }
 
-    public Patient getPatientBySSN2(String SSN) {
-        for (Patient p : patients) {
+    public Patient getPatientBySSN2(String SSN) throws PatientsManagerException {
+        for (Patient p : getPatients()) {
             if (SSN.equals(p.getSSN())) {
                 return p;
             }
@@ -104,7 +104,12 @@ public class doctorController implements IController {
         List<Patient> sortedPat = new ArrayList<>();
         if (!AppUtils.isNull(disease)) {
             cs.stream().filter(c -> c.getDiag().toLowerCase().contains(disease.toLowerCase())).forEach(c -> {
-                Patient p = getPatientBySSN2(c.getPatientSSN());
+                Patient p = null;
+                try {
+                    p = getPatientBySSN2(c.getPatientSSN());
+                } catch (PatientsManagerException e) {
+                    e.printStackTrace();
+                }
                 if (!pat.contains(p)) {
                     pat.add(p);
                 }

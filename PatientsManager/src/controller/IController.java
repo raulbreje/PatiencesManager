@@ -21,7 +21,7 @@ public interface IController {
 
     void setConsultations(List<Consultation> consultations);
 
-    Patient getPatientBySSN2(String SSN);
+    Patient getPatientBySSN2(String SSN) throws PatientsManagerException;
 
     Consultation getConsultationByID(String ID);
 
