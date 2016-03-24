@@ -58,33 +58,33 @@ public class View implements IView {
                     System.out.println("Give CNP: ");
                     String CNP = keyboard.next();
                     System.out.println("Give address: ");
-                    String address = keyboard.nextLine();
+                    String address = keyboard.next();
                     Patient p = new Patient(name.trim(), CNP.trim(), address.trim());
                     try {
                         controller2.add(p);
                     } catch (Exception e) {
-                        System.err.println(e + " one");
+                        System.err.println(e);
                     }
                     break;
                 case 2:
 
                     System.out.println("Give consID: ");
-                    String consID = keyboard.nextLine();
+                    String consID = keyboard.next();
                     System.out.println("Give SSN: ");
-                    String patSSN = keyboard.nextLine();
+                    String patSSN = keyboard.next();
                     System.out.println("Give diagnostic: ");
-                    String diag = keyboard.nextLine();
+                    String diag = keyboard.next();
                     System.out.println("Give meds: ");
-                    String meds = keyboard.nextLine();
+                    String meds = keyboard.next();
                     System.out.println("Give date (dd-MMM-yyyy): ");
-                    String dateS = keyboard.nextLine();
+                    String dateS = keyboard.next();
                     try {
                         LocalDate date = LocalDate.parse(dateS.trim(), AppUtils.DATE_FORMAT);
                         List<String> m = new ArrayList<>(new ArrayList<>(Arrays.asList(meds.split(","))));
                         Consultation c = new Consultation(consID.trim(), patSSN.trim(), diag.trim(), m, date);
                         controller2.add(c);
                     } catch (Exception e) {
-                        System.err.println(e + " two");
+                        System.err.println(e);
                     }
                     break;
                 case 3:
@@ -93,7 +93,7 @@ public class View implements IView {
                     try {
                         System.out.println(controller2.getPatientsWithDisease2(diag2.trim()));
                     } catch (Exception e) {
-                        System.err.println(e + " three");
+                        System.err.println(e);
                     }
                     break;
                 default:
@@ -101,7 +101,6 @@ public class View implements IView {
                     break;
             }
         }
-
     }
 
     @Deprecated

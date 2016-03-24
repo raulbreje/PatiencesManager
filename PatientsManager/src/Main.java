@@ -13,6 +13,8 @@ public class Main {
         IView view = new View(dc);
         view.run2();
 
+        launch();
+
 //	Repository rep = new Repository("pat.txt", "cons.txt");
 //	doctorController dc = new doctorController(rep);		// it's on!
 //	View view = new View(dc);

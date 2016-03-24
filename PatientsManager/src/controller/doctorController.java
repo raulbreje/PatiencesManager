@@ -54,6 +54,7 @@ public class doctorController implements IController {
     }
 
     public Consultation getConsultationByID(String ID) {
+//        Consultation c = consultations.forEach((t) -> { ; return t; });
         for (Consultation c : consultations) {
             if (ID.equals(c.getConsID())) {
                 return c;
