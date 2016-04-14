@@ -104,7 +104,7 @@ public class Repository implements IRepository {
     private void saveObjectToFile(String fileName, IAppElement elem) throws PatientsManagerException {
         if (elem instanceof Patient) {
             Patient p = (Patient) elem;
-            List<Patient> lp = getPatientList();
+            List<Patient> lp = getPatients();
             lp.add(p);
             List<String> lps = new ArrayList<>();
             lp.stream().map(String::valueOf).forEach(lps::add);
@@ -115,7 +115,7 @@ public class Repository implements IRepository {
             }
         } else if (elem instanceof Consultation) {
             Consultation c = (Consultation) elem;
-            List<Consultation> lc = getConsultationList();
+            List<Consultation> lc = getConsultations();
             lc.add(c);
             List<String> lcs = new ArrayList<>();
             lc.stream().map(String::valueOf).forEach(lcs::add);

@@ -1,12 +1,17 @@
 package controller;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import exception.PatientsManagerException;
 import exception.ValidatorException;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import model.*;
 import persistence.IRepository;
 import persistence.Repository;
@@ -18,23 +23,19 @@ public class doctorController implements IController {
     private List<Consultation> consultations;
     private IRepository repository;
 
-    /**
-     * Constructors
-     */
-
-    public doctorController(IRepository repository){
+    public doctorController(IRepository repository) {
         this.repository = repository;
     }
 
     public List<Patient> getPatients() throws PatientsManagerException {
-        if (patients == null){
+        if (patients == null) {
             patients = repository.getPatients();
         }
         return patients;
     }
 
     public List<Consultation> getConsultations() throws PatientsManagerException {
-        if (consultations == null){
+        if (consultations == null) {
             consultations = repository.getConsultations();
         }
         return consultations;
@@ -122,8 +123,8 @@ public class doctorController implements IController {
                 p1.getConsNum(), p2.getConsNum());
         pat.stream().sorted(byConsNumber)
                 .forEach(sp -> sortedPat.add(sp));
-    return sortedPat;
-}
+        return sortedPat;
+    }
 
     @Deprecated
     private List<Patient> PatientList;
@@ -269,6 +270,7 @@ public class doctorController implements IController {
         }
         return p;
     }
+
 
 	/* For debugging purposes
     public void printList()

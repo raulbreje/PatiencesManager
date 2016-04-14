@@ -67,7 +67,6 @@ public class View implements IView {
                     }
                     break;
                 case 2:
-
                     System.out.println("Give consID: ");
                     String consID = keyboard.next();
                     System.out.println("Give SSN: ");
