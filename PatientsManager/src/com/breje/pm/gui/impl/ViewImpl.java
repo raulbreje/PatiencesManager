@@ -71,8 +71,10 @@ public class ViewImpl implements View {
 				String stringDate = keyboard.nextLine();
 				try {
 					LocalDate date = LocalDate.parse(stringDate.trim(), AppHelper.DATE_FORMAT);
-					List<String> medsList = new ArrayList<>(Arrays.asList(meds.trim().split(",")));
-					Consultation consultation = new Consultation(patientSSN.trim(), diagnostic.trim(), medsList, date);
+					List<String> medsList = new ArrayList<>(Arrays.asList(meds.split(",")));
+					List<String> medsListTrims = new ArrayList<>();
+					medsList.stream().map(String::trim).forEach(medsListTrims::add);
+					Consultation consultation = new Consultation(patientSSN.trim(), diagnostic.trim(), medsListTrims, date);
 					controller.add(consultation);
 				} catch (Exception e) {
 					System.err.println(e);

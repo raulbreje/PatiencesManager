@@ -19,7 +19,7 @@ public interface Controller {
 
 	Patient getPatientBySSN(String SSN) throws PatientsManagerException;
 
-	Consultation getConsultationByID(String ID);
+	Consultation getConsultationByID(String ID) throws PatientsManagerException;
 
 	void add(IAppElement elem) throws PatientsManagerException, ValidatorException;
 

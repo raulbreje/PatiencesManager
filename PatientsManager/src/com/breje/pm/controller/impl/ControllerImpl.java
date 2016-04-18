@@ -40,6 +40,9 @@ public class ControllerImpl implements Controller {
 	}
 
 	public Patient getPatientBySSN(String SSN) throws PatientsManagerException {
+		if (patients == null) {
+			patients = repository.getPatients();
+		}
 		for (Patient p : getPatients()) {
 			if (SSN.equals(p.getSSN())) {
 				return p;
@@ -48,8 +51,10 @@ public class ControllerImpl implements Controller {
 		return null;
 	}
 
-	public Consultation getConsultationByID(String ID) {
-		// Consultation c = consultations.forEach((t) -> { ; return t; });
+	public Consultation getConsultationByID(String ID) throws PatientsManagerException {
+		if (consultations == null) {
+			consultations = repository.getConsultations();
+		}
 		for (Consultation c : consultations) {
 			if (ID.equals(c.getConsID())) {
 				return c;
