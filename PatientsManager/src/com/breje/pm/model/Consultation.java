@@ -15,7 +15,7 @@ public class Consultation implements IAppElement {
 	private static int CONS_NUMBER = 0;
 
 	public Consultation() {
-		consID = CONS_NUMBER + "";
+		consID = Integer.toString(CONS_NUMBER);
 		patientSSN = "default_patientSSN";
 		diag = "default_diag";
 		meds = new ArrayList<>();
@@ -24,7 +24,7 @@ public class Consultation implements IAppElement {
 	}
 
 	public Consultation(String PatientSSN, String diag, List<String> meds, LocalDate date) {
-		this.consID = CONS_NUMBER + "";
+		this.consID = Integer.toString(CONS_NUMBER);
 		this.patientSSN = PatientSSN;
 		this.diag = diag;
 		this.meds = meds;

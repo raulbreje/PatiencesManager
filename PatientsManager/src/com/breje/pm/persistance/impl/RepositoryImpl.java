@@ -77,7 +77,7 @@ public class RepositoryImpl implements Repository {
 				med.add(m.trim());
 			}
 			LocalDate date = LocalDate.parse(pat[4].trim(), AppHelper.DATE_FORMAT);
-			Consultation c = new Consultation(pat[0].trim(), pat[1].trim(), pat[2].trim(), med, date);
+			Consultation c = new Consultation(pat[1].trim(), pat[2].trim(), med, date);
 			lp.add(c);
 		}
 		return lp;
@@ -87,8 +87,10 @@ public class RepositoryImpl implements Repository {
 		switch (type) {
 		case PATIENT:
 			saveObjectToFile(patients, elem);
+			break;
 		case CONSULTATION:
 			saveObjectToFile(consultations, elem);
+			break;
 		default:
 			throw new PatientsManagerException("Type of object error. Contact your administrator");
 		}

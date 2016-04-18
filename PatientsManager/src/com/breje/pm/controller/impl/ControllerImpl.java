@@ -39,10 +39,6 @@ public class ControllerImpl implements Controller {
 		return consultations;
 	}
 
-	public void setConsultations(List<Consultation> consultations) {
-		this.consultations = consultations;
-	}
-
 	public Patient getPatientBySSN(String SSN) throws PatientsManagerException {
 		for (Patient p : getPatients()) {
 			if (SSN.equals(p.getSSN())) {
@@ -60,10 +56,6 @@ public class ControllerImpl implements Controller {
 			}
 		}
 		return null;
-	}
-
-	public Repository getRepository() {
-		return repository;
 	}
 
 	public void add(IAppElement elem) throws PatientsManagerException, ValidatorException {
