@@ -73,22 +73,23 @@ public class ControllerImpl implements Controller {
 		}
 	}
 
-	private void addPatient(Patient p) throws ValidatorException, PatientsManagerException {
-		Validator.validatePerson(p);
-		if (getPatientBySSN(p.getSSN()) == null) {
-			patients.add(p);
-			repository.save(AppObjectTypes.PATIENT, p);
+	private void addPatient(Patient patient) throws ValidatorException, PatientsManagerException {
+		Validator.validatePerson(patient);
+		if (getPatientBySSN(patient.getSSN()) == null) {
+			patients.add(patient);
+			repository.save(AppObjectTypes.PATIENT, patient);
 		} else {
 			throw new PatientsManagerException("Patient don't exists. Contact your administrator.");
 		}
 	}
 
-	private void addConsultation(Consultation c) throws PatientsManagerException, ValidatorException {
-		Validator.validateConsultation(c);
-		if (getPatientBySSN(c.getPatientSSN()) != null && getConsultationByID(c.getConsID()) == null) {
-			consultations.add(c);
-			repository.save(AppObjectTypes.CONSULTATION, c);
-			Patient p = getPatientBySSN(c.getPatientSSN());
+	private void addConsultation(Consultation consultation) throws PatientsManagerException, ValidatorException {
+		Validator.validateConsultation(consultation);
+		if (getPatientBySSN(consultation.getPatientSSN()) != null
+				&& getConsultationByID(consultation.getConsID()) == null) {
+			consultations.add(consultation);
+			repository.save(AppObjectTypes.CONSULTATION, consultation);
+			Patient p = getPatientBySSN(consultation.getPatientSSN());
 			p.setConsNum(p.getConsNum() + 1);
 		} else {
 			throw new PatientsManagerException("Consultation ID already exists. Contact your administrator.");

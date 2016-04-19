@@ -25,18 +25,18 @@ public class Validator {
 	}
 
 	public static void validateConsultation(Consultation consultation) throws ValidatorException {
-		// if (consultation.getConsID() == null) {
-		// throw new ValidatorException("Invalid Cons ID.");
-		// }
-		// if (consultation.getPatientSSN() == null) {
-		// throw new ValidatorException("Invalid Patient SSN.");
-		// }
-		// if (consultation.getDiag() == null) {
-		// throw new ValidatorException("Invalid Diag.");
-		// }
-		// if (consultation.getMeds().isEmpty()) {
-		// throw new ValidatorException("Empty meds.");
-		// }
+		if (consultation.getConsID() == null) {
+			throw new ValidatorException("Invalid Cons ID.");
+		}
+		if (consultation.getPatientSSN() == null) {
+			throw new ValidatorException("Invalid Patient SSN.");
+		}
+		if (consultation.getDiag() == null) {
+			throw new ValidatorException("Invalid Diag.");
+		}
+		if (consultation.getMeds().isEmpty()) {
+			throw new ValidatorException("Empty meds.");
+		}
 	}
 
 }

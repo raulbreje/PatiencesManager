@@ -24,10 +24,6 @@ public class Patient implements IAppElement {
 		return patientId;
 	}
 
-	public void setPatientID(String patientId) {
-		this.patientId = patientId;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -42,6 +38,7 @@ public class Patient implements IAppElement {
 
 	public void setSSN(String sSN) {
 		SSN = sSN;
+		patientId = SSN;
 	}
 
 	public String getAddress() {
