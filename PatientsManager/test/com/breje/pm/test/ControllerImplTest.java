@@ -19,6 +19,7 @@ import com.breje.pm.controller.Controller;
 import com.breje.pm.controller.impl.ControllerImpl;
 import com.breje.pm.exception.PatientsManagerException;
 import com.breje.pm.exception.ValidatorException;
+import com.breje.pm.model.IAppElement;
 import com.breje.pm.model.Patient;
 import com.breje.pm.persistance.Repository;
 import com.breje.pm.persistance.impl.RepositoryImpl;
@@ -116,6 +117,7 @@ public class ControllerImplTest {
 				break;
 			}
 		}
+		
 		System.out.println("Test case (testAdd) has been finished.");
 	}
 
