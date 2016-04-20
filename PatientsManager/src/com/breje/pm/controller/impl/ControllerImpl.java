@@ -79,7 +79,7 @@ public class ControllerImpl implements Controller {
 			patients.add(patient);
 			repository.save(AppObjectTypes.PATIENT, patient);
 		} else {
-			throw new PatientsManagerException("Patient don't exists. Contact your administrator.");
+			throw new PatientsManagerException("Patient already exists. Contact your administrator.");
 		}
 	}
 

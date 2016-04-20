@@ -19,10 +19,9 @@ import com.breje.pm.controller.Controller;
 import com.breje.pm.controller.impl.ControllerImpl;
 import com.breje.pm.exception.PatientsManagerException;
 import com.breje.pm.exception.ValidatorException;
-import com.breje.pm.model.IAppElement;
 import com.breje.pm.model.Patient;
 import com.breje.pm.persistance.Repository;
-import com.breje.pm.persistance.impl.RepositoryImpl;
+import com.breje.pm.persistance.mock.RepositoryMock;
 
 public class ControllerImplTest {
 
@@ -34,7 +33,7 @@ public class ControllerImplTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		System.out.println("Test cases for Controller workflow had been started.");
-		repository = new RepositoryImpl("persistance/pat-tests.txt", "persistance/cons-tests.txt");
+		repository = new RepositoryMock();
 		System.out.println("Repository of application has been initialized.");
 		controller = new ControllerImpl(repository);
 		System.out.println("Controller of application has been initialized.");
@@ -118,6 +117,15 @@ public class ControllerImplTest {
 			}
 		}
 		
+		boolean alreadyExists = false;
+		try {
+			controller.add(patient1);
+		} catch (PatientsManagerException | ValidatorException e) {
+			alreadyExists = true;
+		}
+		assertTrue(alreadyExists);
+		
+
 		System.out.println("Test case (testAdd) has been finished.");
 	}
 

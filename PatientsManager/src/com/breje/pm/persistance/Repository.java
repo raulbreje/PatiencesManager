@@ -15,8 +15,6 @@ public interface Repository {
 
 	void cleanFiles() throws PatientsManagerException;
 
-	List<String> load(AppObjectTypes type) throws PatientsManagerException;
-
 	List<Patient> getPatients() throws PatientsManagerException;
 
 	List<Consultation> getConsultations() throws PatientsManagerException;

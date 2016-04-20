@@ -1,5 +1,6 @@
 package com.breje.pm.persistance.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -26,16 +27,32 @@ public class RepositoryImpl implements Repository {
 		this.consultations = consultations;
 	}
 
+	@Override
 	public void cleanFiles() throws PatientsManagerException {
 		try {
 			Files.deleteIfExists(Paths.get(patients));
 			Files.deleteIfExists(Paths.get(consultations));
+			File filePat = new File(patients);
+			filePat.createNewFile();
+			File fileCons = new File(consultations);
+			fileCons.createNewFile();
 		} catch (IOException e) {
 			throw new PatientsManagerException("IOException. Contact your administrator");
 		}
 	}
 
-	public List<String> load(AppObjectTypes type) throws PatientsManagerException {
+	@Override
+	public List<Patient> getPatients() throws PatientsManagerException {
+		List<Patient> lp = new ArrayList<>();
+		List<String> tokens = load(AppObjectTypes.PATIENT);
+		for (String elem : tokens) {
+			String[] pat = elem.split(",");
+			lp.add(new Patient(pat[0].trim(), pat[1].trim(), pat[2].trim()));
+		}
+		return lp;
+	}
+
+	private List<String> load(AppObjectTypes type) throws PatientsManagerException {
 		switch (type) {
 		case PATIENT:
 			return getObjectFromFile(patients);
@@ -56,16 +73,7 @@ public class RepositoryImpl implements Repository {
 		return listOfPatients;
 	}
 
-	public List<Patient> getPatients() throws PatientsManagerException {
-		List<Patient> lp = new ArrayList<>();
-		List<String> tokens = load(AppObjectTypes.PATIENT);
-		for (String elem : tokens) {
-			String[] pat = elem.split(",");
-			lp.add(new Patient(pat[0].trim(), pat[1].trim(), pat[2].trim()));
-		}
-		return lp;
-	}
-
+	@Override
 	public List<Consultation> getConsultations() throws PatientsManagerException {
 		List<Consultation> lp = new ArrayList<>();
 		List<String> tokens = load(AppObjectTypes.CONSULTATION);
@@ -83,6 +91,7 @@ public class RepositoryImpl implements Repository {
 		return lp;
 	}
 
+	@Override
 	public void save(AppObjectTypes type, IAppElement elem) throws PatientsManagerException {
 		switch (type) {
 		case PATIENT:
