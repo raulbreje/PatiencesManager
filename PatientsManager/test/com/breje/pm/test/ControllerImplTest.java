@@ -3,6 +3,10 @@ package com.breje.pm.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.After;
@@ -69,6 +73,13 @@ public class ControllerImplTest {
 	public void testAdd() {
 		System.out.println("Test case (testAdd) has been started.");
 		try {
+			Files.deleteIfExists(Paths.get("persistance/pat-tests.txt"));
+			File file = new File("persistance/pat-tests.txt");
+			file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
 			controller.add(patient1);
 		} catch (PatientsManagerException | ValidatorException e) {
 			e.printStackTrace();
@@ -87,7 +98,7 @@ public class ControllerImplTest {
 			e.printStackTrace();
 		}
 		toRemovePatients.remove(patient1);
-		
+
 		try {
 			controller.add(patient2);
 		} catch (PatientsManagerException | ValidatorException e) {
@@ -101,7 +112,7 @@ public class ControllerImplTest {
 		}
 		for (Patient p : currentPatients) {
 			if (p.equals(patient2)) {
-				assertEquals(patient1, p);
+				assertEquals(patient2, p);
 				break;
 			}
 		}
