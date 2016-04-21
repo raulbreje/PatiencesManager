@@ -32,6 +32,7 @@ public class RepositoryTest {
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		repository.cleanFiles();
+		
 		repository = null;
 		System.out.println("Repository of application has been disposed.");
 		System.out.println("Test cases for Repository workflow had been finished.");

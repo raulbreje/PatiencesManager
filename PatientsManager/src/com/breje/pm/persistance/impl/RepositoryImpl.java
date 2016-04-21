@@ -29,10 +29,7 @@ public class RepositoryImpl implements Repository {
 	@Override
 	public void cleanFiles() throws PatientsManagerException {
 		try {
-			AppHelper.deleteLocalFile(patients);
-			AppHelper.createLocalFile(patients);
-			AppHelper.deleteLocalFile(consultations);
-			AppHelper.createLocalFile(consultations);
+			AppHelper.cleanFileContent(patients, consultations);
 		} catch (IOException e) {
 			throw new PatientsManagerException("IOException. Contact your administrator");
 		}

@@ -20,13 +20,12 @@ public class AppHelper {
 		return false;
 	}
 
-	public static void deleteLocalFile(String fileName) throws IOException {
-		Files.deleteIfExists(Paths.get(fileName));
-	}
-
-	public static void createLocalFile(String fileName) throws IOException {
-		File tempFile = new File(fileName);
-		tempFile.createNewFile();
+	public static void cleanFileContent(String... fileNames) throws IOException {
+		for (String s : fileNames) {
+			Files.deleteIfExists(Paths.get(s));
+			File tempFile = new File(s);
+			tempFile.createNewFile();
+		}
 	}
 
 }
