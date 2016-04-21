@@ -7,9 +7,9 @@ import java.util.List;
 import com.breje.pm.controller.Controller;
 import com.breje.pm.exception.PatientsManagerException;
 import com.breje.pm.exception.ValidatorException;
-import com.breje.pm.model.AppObjectTypes;
+import com.breje.pm.model.ObjectTypes;
 import com.breje.pm.model.Consultation;
-import com.breje.pm.model.IAppElement;
+import com.breje.pm.model.AppEntity;
 import com.breje.pm.model.Patient;
 import com.breje.pm.model.Validator;
 import com.breje.pm.persistance.Repository;
@@ -63,7 +63,7 @@ public class ControllerImpl implements Controller {
 		return null;
 	}
 
-	public void add(IAppElement elem) throws PatientsManagerException, ValidatorException {
+	public void add(AppEntity elem) throws PatientsManagerException, ValidatorException {
 		if (elem instanceof Patient) {
 			addPatient((Patient) elem);
 		} else if (elem instanceof Consultation) {
@@ -77,7 +77,7 @@ public class ControllerImpl implements Controller {
 		Validator.validatePerson(patient);
 		if (getPatientBySSN(patient.getSSN()) == null) {
 			patients.add(patient);
-			repository.save(AppObjectTypes.PATIENT, patient);
+			repository.save(ObjectTypes.PATIENT, patient);
 		} else {
 			throw new PatientsManagerException("Patient already exists. Contact your administrator.");
 		}
@@ -88,7 +88,7 @@ public class ControllerImpl implements Controller {
 		if (getPatientBySSN(consultation.getPatientSSN()) != null
 				&& getConsultationByID(consultation.getConsID()) == null) {
 			consultations.add(consultation);
-			repository.save(AppObjectTypes.CONSULTATION, consultation);
+			repository.save(ObjectTypes.CONSULTATION, consultation);
 			Patient p = getPatientBySSN(consultation.getPatientSSN());
 			p.setConsNum(p.getConsNum() + 1);
 		} else {

@@ -50,8 +50,8 @@ public class ControllerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		patient1 = new Patient("First User", "1990921314010", "acasa la el");
-		patient2 = new Patient("Second User", "1890623336023", "acasa tot la el");
+		patient1 = new Patient("First User", "1990921314010", "acasa la el3");
+		patient2 = new Patient("Second User", "1890623336023", "acasa tot la el3");
 		System.out.println("Test case has been set up.");
 	}
 
@@ -70,15 +70,8 @@ public class ControllerImplTest {
 	}
 
 	@Test
-	public void testAdd() {
+	public void testAdd1() {
 		System.out.println("Test case (testAdd) has been started.");
-		try {
-			Files.deleteIfExists(Paths.get("persistance/pat-tests.txt"));
-			File file = new File("persistance/pat-tests.txt");
-			file.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		try {
 			controller.add(patient1);
 		} catch (PatientsManagerException | ValidatorException e) {
@@ -91,6 +84,12 @@ public class ControllerImplTest {
 			e.printStackTrace();
 		}
 		assertEquals(patient1, temporaryPatient);
+		System.out.println("Test case (testAdd) has been finished.");
+	}
+	
+	@Test
+	public void testAdd2() {
+		System.out.println("Test case (testAdd) has been started.");
 		List<Patient> toRemovePatients = null;
 		try {
 			toRemovePatients = controller.getPatients();
@@ -116,7 +115,12 @@ public class ControllerImplTest {
 				break;
 			}
 		}
-		
+		System.out.println("Test case (testAdd) has been finished.");
+	}
+	
+	@Test
+	public void testAdd3() {
+		System.out.println("Test case (testAdd) has been started.");
 		boolean alreadyExists = false;
 		try {
 			controller.add(patient1);
@@ -124,8 +128,6 @@ public class ControllerImplTest {
 			alreadyExists = true;
 		}
 		assertTrue(alreadyExists);
-		
-
 		System.out.println("Test case (testAdd) has been finished.");
 	}
 

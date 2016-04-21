@@ -13,21 +13,18 @@ public class Validator {
 	public static final String PATTERN_NAME = "^[a-zA-Z\\s]+";
 
 	public static void validatePerson(Patient patient) throws ValidatorException {
-		if (AppHelper.isNull(patient.getName()) || !patient.getName().matches(PATTERN_NAME)) {
+		if (AppHelper.isNull(patient.getName()) || patient.getName().length() < 3 || patient.getName().length() > 20 || !patient.getName().matches(PATTERN_NAME)) {
 			throw new ValidatorException("Invalid Name.");
 		}
 		if (!patient.getSSN().matches(PATTERN_SSN)) {
 			throw new ValidatorException("Invalid SSN.");
 		}
-		if (AppHelper.isNull(patient.getAddress())) {
+		if (AppHelper.isNull(patient.getAddress()) || patient.getAddress().length() < 3 || !patient.getAddress().matches(".*[0-9]+.*")) {
 			throw new ValidatorException("Invalid address.");
 		}
 	}
 
 	public static void validateConsultation(Consultation consultation) throws ValidatorException {
-		if (consultation.getConsID() == null) {
-			throw new ValidatorException("Invalid Cons ID.");
-		}
 		if (consultation.getPatientSSN() == null) {
 			throw new ValidatorException("Invalid Patient SSN.");
 		}

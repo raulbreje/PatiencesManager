@@ -1,5 +1,9 @@
 package com.breje.pm.util;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -14,6 +18,15 @@ public class AppHelper {
 			return true;
 		}
 		return false;
+	}
+
+	public static void deleteLocalFile(String fileName) throws IOException {
+		Files.deleteIfExists(Paths.get(fileName));
+	}
+
+	public static void createLocalFile(String fileName) throws IOException {
+		File tempFile = new File(fileName);
+		tempFile.createNewFile();
 	}
 
 }

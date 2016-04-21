@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.breje.pm.exception.PatientsManagerException;
-import com.breje.pm.model.AppObjectTypes;
+import com.breje.pm.model.ObjectTypes;
 import com.breje.pm.model.Consultation;
-import com.breje.pm.model.IAppElement;
+import com.breje.pm.model.AppEntity;
 import com.breje.pm.model.Patient;
 import com.breje.pm.persistance.Repository;
 import com.breje.pm.util.AppHelper;
@@ -62,7 +62,7 @@ public class RepositoryMock implements Repository {
 	}
 
 	@Override
-	public void save(AppObjectTypes type, IAppElement elem) throws PatientsManagerException {
+	public void save(ObjectTypes type, AppEntity elem) throws PatientsManagerException {
 		switch (type) {
 		case PATIENT:
 			patients.add((Patient) elem);

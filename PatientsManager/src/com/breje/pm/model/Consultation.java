@@ -1,34 +1,24 @@
 package com.breje.pm.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class Consultation implements IAppElement {
+public class Consultation implements AppEntity {
 	private String consID;
 	private String patientSSN;
 	private String diag;
 	private List<String> meds;
-	private LocalDate consultation_date;
+	private LocalDate consultationDate;
 
 	private static int CONS_NUMBER = 0;
-
-	public Consultation() {
-		consID = Integer.toString(CONS_NUMBER);
-		patientSSN = "default_patientSSN";
-		diag = "default_diag";
-		meds = new ArrayList<>();
-		consultation_date = LocalDate.now();
-		CONS_NUMBER++;
-	}
 
 	public Consultation(String PatientSSN, String diag, List<String> meds, LocalDate date) {
 		this.consID = Integer.toString(CONS_NUMBER);
 		this.patientSSN = PatientSSN;
 		this.diag = diag;
 		this.meds = meds;
-		consultation_date = date;
+		consultationDate = date;
 		CONS_NUMBER++;
 	}
 
@@ -65,13 +55,14 @@ public class Consultation implements IAppElement {
 	}
 
 	public LocalDate getConsultation_date() {
-		return consultation_date;
+		return consultationDate;
 	}
 
 	public void setConsultation_date(LocalDate date) {
-		consultation_date = date;
+		consultationDate = date;
 	}
 
+	@Override
 	public String toString() {
 		StringJoiner sj = new StringJoiner(", ");
 		StringBuilder sb = new StringBuilder();
@@ -79,7 +70,7 @@ public class Consultation implements IAppElement {
 			sb.append(med).append(" \\+ ");
 		}
 		sj.add(consID).add(patientSSN).add(diag).add(sb.substring(0, sb.length() - 2).toString())
-				.add(consultation_date.toString());
+				.add(consultationDate.toString());
 		return sj.toString();
 	}
 

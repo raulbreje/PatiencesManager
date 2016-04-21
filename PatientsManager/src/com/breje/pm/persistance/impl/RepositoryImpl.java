@@ -1,6 +1,5 @@
 package com.breje.pm.persistance.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -10,9 +9,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.breje.pm.exception.PatientsManagerException;
-import com.breje.pm.model.AppObjectTypes;
+import com.breje.pm.model.AppEntity;
 import com.breje.pm.model.Consultation;
-import com.breje.pm.model.IAppElement;
+import com.breje.pm.model.ObjectTypes;
 import com.breje.pm.model.Patient;
 import com.breje.pm.persistance.Repository;
 import com.breje.pm.util.AppHelper;
@@ -30,12 +29,10 @@ public class RepositoryImpl implements Repository {
 	@Override
 	public void cleanFiles() throws PatientsManagerException {
 		try {
-			Files.deleteIfExists(Paths.get(patients));
-			Files.deleteIfExists(Paths.get(consultations));
-			File filePat = new File(patients);
-			filePat.createNewFile();
-			File fileCons = new File(consultations);
-			fileCons.createNewFile();
+			AppHelper.deleteLocalFile(patients);
+			AppHelper.createLocalFile(patients);
+			AppHelper.deleteLocalFile(consultations);
+			AppHelper.createLocalFile(consultations);
 		} catch (IOException e) {
 			throw new PatientsManagerException("IOException. Contact your administrator");
 		}
@@ -44,7 +41,7 @@ public class RepositoryImpl implements Repository {
 	@Override
 	public List<Patient> getPatients() throws PatientsManagerException {
 		List<Patient> lp = new ArrayList<>();
-		List<String> tokens = load(AppObjectTypes.PATIENT);
+		List<String> tokens = load(ObjectTypes.PATIENT);
 		for (String elem : tokens) {
 			String[] pat = elem.split(",");
 			lp.add(new Patient(pat[0].trim(), pat[1].trim(), pat[2].trim()));
@@ -52,7 +49,7 @@ public class RepositoryImpl implements Repository {
 		return lp;
 	}
 
-	private List<String> load(AppObjectTypes type) throws PatientsManagerException {
+	private List<String> load(ObjectTypes type) throws PatientsManagerException {
 		switch (type) {
 		case PATIENT:
 			return getObjectFromFile(patients);
@@ -76,7 +73,7 @@ public class RepositoryImpl implements Repository {
 	@Override
 	public List<Consultation> getConsultations() throws PatientsManagerException {
 		List<Consultation> lp = new ArrayList<>();
-		List<String> tokens = load(AppObjectTypes.CONSULTATION);
+		List<String> tokens = load(ObjectTypes.CONSULTATION);
 		for (String elem : tokens) {
 			List<String> med = new ArrayList<>();
 			String[] pat = elem.split(",");
@@ -92,7 +89,7 @@ public class RepositoryImpl implements Repository {
 	}
 
 	@Override
-	public void save(AppObjectTypes type, IAppElement elem) throws PatientsManagerException {
+	public void save(ObjectTypes type, AppEntity elem) throws PatientsManagerException {
 		switch (type) {
 		case PATIENT:
 			saveObjectToFile(patients, elem);
@@ -105,7 +102,7 @@ public class RepositoryImpl implements Repository {
 		}
 	}
 
-	private void saveObjectToFile(String fileName, IAppElement elem) throws PatientsManagerException {
+	private void saveObjectToFile(String fileName, AppEntity elem) throws PatientsManagerException {
 		if (elem instanceof Patient) {
 			Patient p = (Patient) elem;
 			List<Patient> lp = getPatients();

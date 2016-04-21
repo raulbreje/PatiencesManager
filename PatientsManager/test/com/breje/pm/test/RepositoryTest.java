@@ -11,7 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.breje.pm.exception.PatientsManagerException;
-import com.breje.pm.model.AppObjectTypes;
+import com.breje.pm.model.ObjectTypes;
 import com.breje.pm.model.Patient;
 import com.breje.pm.persistance.Repository;
 import com.breje.pm.persistance.impl.RepositoryImpl;
@@ -52,9 +52,9 @@ public class RepositoryTest {
 	}
 
 	@Test
-	public void testSave() {
+	public void testSave1() {
 		try {
-			repository.save(AppObjectTypes.PATIENT, patient1);
+			repository.save(ObjectTypes.PATIENT, patient1);
 		} catch (PatientsManagerException e) {
 			e.printStackTrace();
 		}
@@ -71,25 +71,40 @@ public class RepositoryTest {
 			}
 		}
 		assertTrue(existsPatient);
-		
+	}
+	
+	@Test
+	public void testSave2() {
 		try {
-			repository.save(AppObjectTypes.PATIENT, patient2);
+			repository.save(ObjectTypes.PATIENT, patient2);
 		} catch (PatientsManagerException e) {
 			e.printStackTrace();
 		}
-		patients = null;
+		List<Patient> patients = null;
 		try {
 			patients = repository.getPatients();
 		} catch (PatientsManagerException e) {
 			e.printStackTrace();
 		}
-		existsPatient = false;
+		boolean existsPatient = false;
 		for (Patient p : patients){
 			if (p.getSSN().equals(patient2.getSSN())){
 				existsPatient = true;
 			}
 		}
 		assertTrue(existsPatient);
+	}
+	
+	@Test
+	public void testSave3() {
+		patient1 = null;
+		boolean isPatientNull = false;
+		try {
+			repository.save(ObjectTypes.PATIENT, patient1);
+		} catch (PatientsManagerException e) {
+			isPatientNull = true;
+		}
+		assertTrue(isPatientNull);
 	}
 
 }

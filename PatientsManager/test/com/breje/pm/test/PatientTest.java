@@ -1,10 +1,12 @@
 package com.breje.pm.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.breje.pm.exception.PatientsManagerException;
 import com.breje.pm.model.Patient;
 
 public class PatientTest {
@@ -115,14 +117,33 @@ public class PatientTest {
 	@Test
 	public void testSetConsNum() {
 		int expected1 = 3;
-		testPatient1.setConsNum(expected1);
+		try {
+			testPatient1.setConsNum(expected1);
+		} catch (PatientsManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		int actual1 = testPatient1.getConsNum();
 		assertEquals(expected1, actual1);
 
 		int expected2 = 4;
-		testPatient2.setConsNum(expected2);
+		try {
+			testPatient2.setConsNum(expected2);
+		} catch (PatientsManagerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		int actual2 = testPatient2.getConsNum();
 		assertEquals(expected2, actual2);
+		
+		int expected3 = -3;
+		boolean invalidNo = false;
+		try {
+			testPatient2.setConsNum(expected3);
+		} catch (PatientsManagerException e) {
+			invalidNo = true;
+		}
+		assertTrue(invalidNo);
 	}
 
 }

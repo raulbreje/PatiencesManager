@@ -2,15 +2,14 @@ package com.breje.pm.model;
 
 import java.util.StringJoiner;
 
-public class Patient implements IAppElement {
+import com.breje.pm.exception.PatientsManagerException;
+
+public class Patient implements AppEntity {
 	private String patientId;
 	private String name;
 	private String SSN;
 	private String address;
 	private int consNum;
-
-	public Patient() {
-	}
 
 	public Patient(String name, String SSN, String address) {
 		patientId = SSN;
@@ -49,7 +48,10 @@ public class Patient implements IAppElement {
 		this.address = address;
 	}
 
-	public void setConsNum(int num) {
+	public void setConsNum(int num) throws PatientsManagerException {
+		if (num < 0) {
+			throw new PatientsManagerException("Invalid number of consultation.");
+		}
 		consNum = num;
 	}
 
@@ -57,6 +59,7 @@ public class Patient implements IAppElement {
 		return consNum;
 	}
 
+	@Override
 	public String toString() {
 		StringJoiner sj = new StringJoiner(", ");
 		sj.add(name).add(SSN).add(address);
