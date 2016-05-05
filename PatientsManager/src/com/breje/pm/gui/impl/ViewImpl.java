@@ -31,7 +31,7 @@ public class ViewImpl implements View {
 		sj.add("Menu:");
 		sj.add("1 - Add Patient");
 		sj.add("2 - Add Consultation");
-		sj.add("3 - Get patiences");
+		sj.add("3 - Get patients");
 		sj.add("0 - Exit");
 		sj.add("Give you command: ");
 		return sj.toString();
@@ -74,7 +74,8 @@ public class ViewImpl implements View {
 					List<String> medsList = new ArrayList<>(Arrays.asList(meds.split(",")));
 					List<String> medsListTrims = new ArrayList<>();
 					medsList.stream().map(String::trim).forEach(medsListTrims::add);
-					Consultation consultation = new Consultation(patientSSN.trim(), diagnostic.trim(), medsListTrims, date);
+					Consultation consultation = new Consultation(patientSSN.trim(), diagnostic.trim(), medsListTrims,
+							date);
 					controller.add(consultation);
 				} catch (Exception e) {
 					System.err.println(e);
@@ -84,7 +85,10 @@ public class ViewImpl implements View {
 				System.out.println("Give the disease: ");
 				String filterDiagnostic = keyboard.nextLine();
 				try {
-					System.out.println(controller.getPatientsWithDisease(filterDiagnostic.trim()));
+					List<Patient> patients = controller.getPatientsWithDisease(filterDiagnostic.trim());
+					for (Patient p : patients) {
+						System.out.println(p.toString());
+					}
 				} catch (Exception e) {
 					System.err.println(e);
 				}

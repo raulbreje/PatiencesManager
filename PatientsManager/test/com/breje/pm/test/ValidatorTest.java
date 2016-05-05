@@ -1,6 +1,6 @@
 package com.breje.pm.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,7 +11,6 @@ import org.junit.Test;
 import com.breje.pm.exception.ValidatorException;
 import com.breje.pm.model.Patient;
 import com.breje.pm.model.Validator;
-import com.breje.pm.persistance.Repository;
 
 public class ValidatorTest {
 
@@ -24,7 +23,7 @@ public class ValidatorTest {
 	private Patient patient7 = null;
 	private Patient patient8 = null;
 	private Patient patient9 = null;
-	
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		System.out.println("Test cases for Validator workflow had been started.");
@@ -60,7 +59,7 @@ public class ValidatorTest {
 		patient8 = null;
 		patient9 = null;
 	}
-	
+
 	@Test
 	public void testValidatePerson1() {
 		boolean isValid = true;
@@ -72,7 +71,7 @@ public class ValidatorTest {
 		}
 		assertTrue(isValid);
 	}
-	
+
 	@Test
 	public void testValidatePerson2() {
 		boolean isInvalid = false;
@@ -83,7 +82,7 @@ public class ValidatorTest {
 		}
 		assertTrue(isInvalid);
 	}
-	
+
 	@Test
 	public void testValidatePerson3() {
 		boolean isInvalid = false;
@@ -94,7 +93,7 @@ public class ValidatorTest {
 		}
 		assertTrue(isInvalid);
 	}
-	
+
 	@Test
 	public void testValidatePerson4() {
 		boolean isInvalid = false;
@@ -105,7 +104,7 @@ public class ValidatorTest {
 		}
 		assertTrue(isInvalid);
 	}
-	
+
 	@Test
 	public void testValidatePerson5() {
 		boolean isInvalid = false;
@@ -116,7 +115,7 @@ public class ValidatorTest {
 		}
 		assertTrue(isInvalid);
 	}
-	
+
 	@Test
 	public void testValidatePerson6() {
 		boolean isInvalid = false;
@@ -127,7 +126,7 @@ public class ValidatorTest {
 		}
 		assertTrue(isInvalid);
 	}
-	
+
 	@Test
 	public void testValidatePerson7() {
 		boolean isInvalid = false;
@@ -138,7 +137,7 @@ public class ValidatorTest {
 		}
 		assertTrue(isInvalid);
 	}
-	
+
 	@Test
 	public void testValidatePerson8() {
 		boolean isInvalid = false;
@@ -149,7 +148,7 @@ public class ValidatorTest {
 		}
 		assertTrue(isInvalid);
 	}
-	
+
 	@Test
 	public void testValidatePerson9() {
 		boolean isInvalid = false;

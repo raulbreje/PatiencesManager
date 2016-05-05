@@ -3,10 +3,6 @@ package com.breje.pm.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.After;
@@ -86,7 +82,7 @@ public class ControllerImplTest {
 		assertEquals(patient1, temporaryPatient);
 		System.out.println("Test case (testAdd) has been finished.");
 	}
-	
+
 	@Test
 	public void testAdd2() {
 		System.out.println("Test case (testAdd) has been started.");
@@ -117,7 +113,7 @@ public class ControllerImplTest {
 		}
 		System.out.println("Test case (testAdd) has been finished.");
 	}
-	
+
 	@Test
 	public void testAdd3() {
 		System.out.println("Test case (testAdd) has been started.");

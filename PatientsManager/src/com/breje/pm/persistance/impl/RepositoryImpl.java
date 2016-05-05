@@ -106,26 +106,33 @@ public class RepositoryImpl implements Repository {
 			lp.add(p);
 			List<String> lps = new ArrayList<>();
 			lp.stream().map(String::valueOf).forEach(lps::add);
-			try {
-				Files.write(Paths.get(fileName), lps);
-			} catch (IOException e) {
-				throw new PatientsManagerException("Whatever. Contact your administrator.");
-			}
+			writeObjectsIntoFile(fileName, lps);
 		} else if (elem instanceof Consultation) {
 			Consultation c = (Consultation) elem;
 			List<Consultation> lc = getConsultations();
 			lc.add(c);
 			List<String> lcs = new ArrayList<>();
 			lc.stream().map(String::valueOf).forEach(lcs::add);
-			try {
-				Files.write(Paths.get(fileName), lcs);
-			} catch (IOException e) {
-				throw new PatientsManagerException("Whatever. Contact your administrator.");
-			}
+			writeObjectsIntoFile(fileName, lcs);
 		} else {
 			throw new PatientsManagerException("Whatever. Contact your administrator.");
 		}
 
+	}
+
+	private void writeObjectsIntoFile(String fileName, List<String> elems) throws PatientsManagerException {
+		try {
+			AppHelper.cleanFileContent(fileName);
+			Files.write(Paths.get(fileName), elems);
+		} catch (IOException e) {
+			throw new PatientsManagerException("Whatever. Contact your administrator.");
+		}
+	}
+
+	@Override
+	public List<AppEntity> getEntities(ObjectTypes type) throws PatientsManagerException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

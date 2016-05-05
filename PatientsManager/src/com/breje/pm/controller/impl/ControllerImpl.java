@@ -1,6 +1,7 @@
 package com.breje.pm.controller.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -117,6 +118,7 @@ public class ControllerImpl implements Controller {
 		}
 		Comparator<Patient> byConsNumber = (p1, p2) -> Integer.compare(p1.getConsNum(), p2.getConsNum());
 		pat.stream().sorted(byConsNumber).forEach(sp -> sortedPat.add(sp));
+		Collections.reverse(sortedPat);
 		return sortedPat;
 	}
 

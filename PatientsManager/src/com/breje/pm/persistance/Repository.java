@@ -13,12 +13,17 @@ import com.breje.pm.model.Patient;
  */
 public interface Repository {
 
-	void cleanFiles() throws PatientsManagerException;
-
-	List<Patient> getPatients() throws PatientsManagerException;
-
-	List<Consultation> getConsultations() throws PatientsManagerException;
+	List<AppEntity> getEntities(ObjectTypes type) throws PatientsManagerException;
 
 	void save(ObjectTypes type, AppEntity elem) throws PatientsManagerException;
+
+	@Deprecated
+	List<Patient> getPatients() throws PatientsManagerException;
+
+	@Deprecated
+	List<Consultation> getConsultations() throws PatientsManagerException;
+
+	@Deprecated
+	void cleanFiles() throws PatientsManagerException;
 
 }

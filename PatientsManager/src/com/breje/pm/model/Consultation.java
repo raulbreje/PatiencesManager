@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.StringJoiner;
 
+import com.breje.pm.util.AppHelper;
+
 public class Consultation implements AppEntity {
 	private String consID;
 	private String patientSSN;
@@ -65,12 +67,13 @@ public class Consultation implements AppEntity {
 	@Override
 	public String toString() {
 		StringJoiner sj = new StringJoiner(", ");
-		StringBuilder sb = new StringBuilder();
+		StringJoiner sjMeds = new StringJoiner(" \\+ ");
 		for (String med : meds) {
-			sb.append(med).append(" \\+ ");
+			sjMeds.add(med);
 		}
-		sj.add(consID).add(patientSSN).add(diag).add(sb.substring(0, sb.length() - 2).toString())
-				.add(consultationDate.toString());
+		sj.add(consID).add(patientSSN).add(diag).add(sjMeds.toString())
+				.add(AppHelper.DATE_FORMAT.format(consultationDate));
+
 		return sj.toString();
 	}
 

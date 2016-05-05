@@ -76,4 +76,10 @@ public class RepositoryMock implements Repository {
 
 	}
 
+	@Override
+	public List<AppEntity> getEntities(ObjectTypes type) throws PatientsManagerException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -25,10 +25,10 @@ public class Validator {
 	}
 
 	public static void validateConsultation(Consultation consultation) throws ValidatorException {
-		if (consultation.getPatientSSN() == null) {
+		if (consultation.getPatientSSN() == null || consultation.getPatientSSN().trim().length() == 0) {
 			throw new ValidatorException("Invalid Patient SSN.");
 		}
-		if (consultation.getDiag() == null) {
+		if (consultation.getDiag() == null || consultation.getDiag().trim().length() == 0) {
 			throw new ValidatorException("Invalid Diag.");
 		}
 		if (consultation.getMeds().isEmpty()) {
