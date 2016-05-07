@@ -6,7 +6,7 @@ import java.util.StringJoiner;
 
 import com.breje.pm.util.AppHelper;
 
-public class Consultation implements AppEntity {
+public class Consultation implements Entity {
 	private String consID;
 	private String patientSSN;
 	private String diag;

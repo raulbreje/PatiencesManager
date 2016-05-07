@@ -4,7 +4,7 @@ import java.util.StringJoiner;
 
 import com.breje.pm.exception.PatientsManagerException;
 
-public class Patient implements AppEntity {
+public class Patient implements Entity {
 	private String patientId;
 	private String name;
 	private String SSN;

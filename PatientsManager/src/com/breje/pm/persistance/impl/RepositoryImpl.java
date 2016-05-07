@@ -9,13 +9,14 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import com.breje.pm.exception.PatientsManagerException;
-import com.breje.pm.model.AppEntity;
 import com.breje.pm.model.Consultation;
+import com.breje.pm.model.Entity;
 import com.breje.pm.model.ObjectTypes;
 import com.breje.pm.model.Patient;
 import com.breje.pm.persistance.Repository;
 import com.breje.pm.util.AppHelper;
 
+@Deprecated
 public class RepositoryImpl implements Repository {
 
 	private String patients;
@@ -26,7 +27,6 @@ public class RepositoryImpl implements Repository {
 		this.consultations = consultations;
 	}
 
-	@Override
 	public void cleanFiles() throws PatientsManagerException {
 		try {
 			AppHelper.cleanFileContent(patients, consultations);
@@ -35,15 +35,17 @@ public class RepositoryImpl implements Repository {
 		}
 	}
 
-	@Override
 	public List<Patient> getPatients() throws PatientsManagerException {
-		List<Patient> lp = new ArrayList<>();
+		List<Patient> listOfPatients = new ArrayList<>();
 		List<String> tokens = load(ObjectTypes.PATIENT);
-		for (String elem : tokens) {
-			String[] pat = elem.split(",");
-			lp.add(new Patient(pat[0].trim(), pat[1].trim(), pat[2].trim()));
+		for (String token : tokens) {
+			String[] patientString = token.split(",");
+			Patient patient = new Patient(patientString[AppHelper.PATIENT_NAME_INDEX].trim(),
+					patientString[AppHelper.PATIENT_SSN_INDEX].trim(),
+					patientString[AppHelper.PATIENT_ADDRESS_INDEX].trim());
+			listOfPatients.add(patient);
 		}
-		return lp;
+		return listOfPatients;
 	}
 
 	private List<String> load(ObjectTypes type) throws PatientsManagerException {
@@ -67,9 +69,8 @@ public class RepositoryImpl implements Repository {
 		return listOfPatients;
 	}
 
-	@Override
 	public List<Consultation> getConsultations() throws PatientsManagerException {
-		List<Consultation> lp = new ArrayList<>();
+		List<Consultation> lc = new ArrayList<>();
 		List<String> tokens = load(ObjectTypes.CONSULTATION);
 		for (String elem : tokens) {
 			List<String> med = new ArrayList<>();
@@ -80,13 +81,12 @@ public class RepositoryImpl implements Repository {
 			}
 			LocalDate date = LocalDate.parse(pat[4].trim(), AppHelper.DATE_FORMAT);
 			Consultation c = new Consultation(pat[1].trim(), pat[2].trim(), med, date);
-			lp.add(c);
+			lc.add(c);
 		}
-		return lp;
+		return lc;
 	}
 
-	@Override
-	public void save(ObjectTypes type, AppEntity elem) throws PatientsManagerException {
+	public void save(ObjectTypes type, Entity elem) throws PatientsManagerException {
 		switch (type) {
 		case PATIENT:
 			saveObjectToFile(patients, elem);
@@ -99,7 +99,7 @@ public class RepositoryImpl implements Repository {
 		}
 	}
 
-	private void saveObjectToFile(String fileName, AppEntity elem) throws PatientsManagerException {
+	private void saveObjectToFile(String fileName, Entity elem) throws PatientsManagerException {
 		if (elem instanceof Patient) {
 			Patient p = (Patient) elem;
 			List<Patient> lp = getPatients();
@@ -129,10 +129,27 @@ public class RepositoryImpl implements Repository {
 		}
 	}
 
-	@Override
-	public List<AppEntity> getEntities(ObjectTypes type) throws PatientsManagerException {
+	public List<Entity> getEntities(ObjectTypes type) throws PatientsManagerException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void save(Entity elem) throws PatientsManagerException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public List<?> getEntities() throws PatientsManagerException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void cleanFile() throws PatientsManagerException {
+		// TODO Auto-generated method stub
+
 	}
 
 }

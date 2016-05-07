@@ -5,13 +5,22 @@ import com.breje.pm.controller.impl.ControllerImpl;
 import com.breje.pm.gui.View;
 import com.breje.pm.gui.impl.ViewImpl;
 import com.breje.pm.persistance.Repository;
+import com.breje.pm.persistance.impl.ConsultationRepository;
+import com.breje.pm.persistance.impl.PatientRepository;
 import com.breje.pm.persistance.impl.RepositoryImpl;
 
 public class Starter {
 
 	public static void main(String[] args) {
+		@Deprecated
 		Repository repository = new RepositoryImpl("persistance/pat.txt", "persistance/cons.txt");
-		Controller controller = new ControllerImpl(repository); 
+		@Deprecated
+		// Controller controller = new ControllerImpl(repository);
+
+		Repository patientRepository = new PatientRepository("persistance/pat.txt");
+		Repository consultationsRepository = new ConsultationRepository("persistance/cons.txt");
+		Controller controller = new ControllerImpl(patientRepository, consultationsRepository);
+
 		View view = new ViewImpl(controller);
 		view.run();
 

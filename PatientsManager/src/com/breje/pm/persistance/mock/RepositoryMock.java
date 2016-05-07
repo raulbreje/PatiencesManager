@@ -8,11 +8,12 @@ import java.util.List;
 import com.breje.pm.exception.PatientsManagerException;
 import com.breje.pm.model.ObjectTypes;
 import com.breje.pm.model.Consultation;
-import com.breje.pm.model.AppEntity;
+import com.breje.pm.model.Entity;
 import com.breje.pm.model.Patient;
 import com.breje.pm.persistance.Repository;
 import com.breje.pm.util.AppHelper;
 
+@Deprecated
 public class RepositoryMock implements Repository {
 
 	private List<Patient> patients = null;
@@ -46,23 +47,19 @@ public class RepositoryMock implements Repository {
 		consultations.add(c3);
 	}
 
-	@Override
 	public void cleanFiles() throws PatientsManagerException {
 		System.out.println("Mock cleanFiles()");
 	}
 
-	@Override
 	public List<Patient> getPatients() throws PatientsManagerException {
 		return patients;
 	}
 
-	@Override
 	public List<Consultation> getConsultations() throws PatientsManagerException {
 		return consultations;
 	}
 
-	@Override
-	public void save(ObjectTypes type, AppEntity elem) throws PatientsManagerException {
+	public void save(ObjectTypes type, Entity elem) throws PatientsManagerException {
 		switch (type) {
 		case PATIENT:
 			patients.add((Patient) elem);
@@ -76,10 +73,27 @@ public class RepositoryMock implements Repository {
 
 	}
 
-	@Override
-	public List<AppEntity> getEntities(ObjectTypes type) throws PatientsManagerException {
+	public List<Entity> getEntities(ObjectTypes type) throws PatientsManagerException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void save(Entity elem) throws PatientsManagerException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<?> getEntities() throws PatientsManagerException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void cleanFile() throws PatientsManagerException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

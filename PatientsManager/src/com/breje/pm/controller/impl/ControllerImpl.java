@@ -8,9 +8,8 @@ import java.util.List;
 import com.breje.pm.controller.Controller;
 import com.breje.pm.exception.PatientsManagerException;
 import com.breje.pm.exception.ValidatorException;
-import com.breje.pm.model.ObjectTypes;
 import com.breje.pm.model.Consultation;
-import com.breje.pm.model.AppEntity;
+import com.breje.pm.model.Entity;
 import com.breje.pm.model.Patient;
 import com.breje.pm.model.Validator;
 import com.breje.pm.persistance.Repository;
@@ -20,81 +19,86 @@ public class ControllerImpl implements Controller {
 
 	private List<Patient> patients;
 	private List<Consultation> consultations;
+	@Deprecated
 	private Repository repository;
 
+	private Repository patientsRepository;
+	private Repository consultationsRepository;
+
+	public ControllerImpl(Repository patientRepository, Repository consultationRepository) {
+		this.patientsRepository = patientRepository;
+		this.consultationsRepository = consultationRepository;
+	}
+
+	@Deprecated
 	public ControllerImpl(Repository repository) {
 		this.repository = repository;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Patient> getPatients() throws PatientsManagerException {
 		if (patients == null) {
-			patients = repository.getPatients();
+			patients = (List<Patient>) patientsRepository.getEntities();
 		}
 		return patients;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Consultation> getConsultations() throws PatientsManagerException {
 		if (consultations == null) {
-			consultations = repository.getConsultations();
+			consultations = (List<Consultation>) consultationsRepository.getEntities();
 		}
 		return consultations;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Patient getPatientBySSN(String SSN) throws PatientsManagerException {
 		if (patients == null) {
-			patients = repository.getPatients();
+			patients = (List<Patient>) patientsRepository.getEntities();
 		}
 		for (Patient p : getPatients()) {
 			if (SSN.equals(p.getSSN())) {
 				return p;
 			}
 		}
-		return null;
+		throw new PatientsManagerException(
+				"The patient with " + SSN + " SSN doesn't exists in repository. Contact your administrator.");
 	}
 
+	@SuppressWarnings("unchecked")
 	public Consultation getConsultationByID(String ID) throws PatientsManagerException {
 		if (consultations == null) {
-			consultations = repository.getConsultations();
+			consultations = (List<Consultation>) consultationsRepository.getEntities();
 		}
 		for (Consultation c : consultations) {
 			if (ID.equals(c.getConsID())) {
 				return c;
 			}
 		}
-		return null;
+		throw new PatientsManagerException(
+				"The consultation with " + ID + " ID doesn't exists in repository. Contact your administrator.");
 	}
 
-	public void add(AppEntity elem) throws PatientsManagerException, ValidatorException {
+	public void add(Entity elem) throws PatientsManagerException, ValidatorException {
 		if (elem instanceof Patient) {
 			addPatient((Patient) elem);
 		} else if (elem instanceof Consultation) {
 			addConsultation((Consultation) elem);
-		} else {
-			throw new PatientsManagerException("Whatever. Contact your administrator.");
 		}
 	}
 
 	private void addPatient(Patient patient) throws ValidatorException, PatientsManagerException {
 		Validator.validatePerson(patient);
-		if (getPatientBySSN(patient.getSSN()) == null) {
-			patients.add(patient);
-			repository.save(ObjectTypes.PATIENT, patient);
-		} else {
-			throw new PatientsManagerException("Patient already exists. Contact your administrator.");
-		}
+		patients.add(patient);
+		patientsRepository.save(patient);
 	}
 
 	private void addConsultation(Consultation consultation) throws PatientsManagerException, ValidatorException {
 		Validator.validateConsultation(consultation);
-		if (getPatientBySSN(consultation.getPatientSSN()) != null
-				&& getConsultationByID(consultation.getConsID()) == null) {
-			consultations.add(consultation);
-			repository.save(ObjectTypes.CONSULTATION, consultation);
-			Patient p = getPatientBySSN(consultation.getPatientSSN());
-			p.setConsNum(p.getConsNum() + 1);
-		} else {
-			throw new PatientsManagerException("Consultation ID already exists. Contact your administrator.");
-		}
+		consultations.add(consultation);
+		consultationsRepository.save(consultation);
+		Patient p = getPatientBySSN(consultation.getPatientSSN());
+		p.setConsNum(p.getConsNum() + 1);
 	}
 
 	public List<Patient> getPatientsWithDisease(String disease) throws PatientsManagerException {

@@ -13,15 +13,14 @@ import org.junit.Test;
 import com.breje.pm.exception.PatientsManagerException;
 import com.breje.pm.model.ObjectTypes;
 import com.breje.pm.model.Patient;
-import com.breje.pm.persistance.Repository;
 import com.breje.pm.persistance.impl.RepositoryImpl;
 
 public class RepositoryTest {
 
 	private Patient patient1 = null;
 	private Patient patient2 = null;
-	private static Repository repository = null;
-	
+	private static RepositoryImpl repository = null;
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		System.out.println("Test cases for Repository workflow had been started.");
@@ -32,7 +31,7 @@ public class RepositoryTest {
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		repository.cleanFiles();
-		
+
 		repository = null;
 		System.out.println("Repository of application has been disposed.");
 		System.out.println("Test cases for Repository workflow had been finished.");
@@ -66,14 +65,14 @@ public class RepositoryTest {
 			e.printStackTrace();
 		}
 		boolean existsPatient = false;
-		for (Patient p : patients){
-			if (p.getSSN().equals(patient1.getSSN())){
+		for (Patient p : patients) {
+			if (p.getSSN().equals(patient1.getSSN())) {
 				existsPatient = true;
 			}
 		}
 		assertTrue(existsPatient);
 	}
-	
+
 	@Test
 	public void testSave2() {
 		try {
@@ -88,14 +87,14 @@ public class RepositoryTest {
 			e.printStackTrace();
 		}
 		boolean existsPatient = false;
-		for (Patient p : patients){
-			if (p.getSSN().equals(patient2.getSSN())){
+		for (Patient p : patients) {
+			if (p.getSSN().equals(patient2.getSSN())) {
 				existsPatient = true;
 			}
 		}
 		assertTrue(existsPatient);
 	}
-	
+
 	@Test
 	public void testSave3() {
 		patient1 = null;

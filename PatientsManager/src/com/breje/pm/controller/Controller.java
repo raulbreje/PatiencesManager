@@ -5,7 +5,7 @@ import java.util.List;
 import com.breje.pm.exception.PatientsManagerException;
 import com.breje.pm.exception.ValidatorException;
 import com.breje.pm.model.Consultation;
-import com.breje.pm.model.AppEntity;
+import com.breje.pm.model.Entity;
 import com.breje.pm.model.Patient;
 
 /**
@@ -21,7 +21,7 @@ public interface Controller {
 
 	Consultation getConsultationByID(String ID) throws PatientsManagerException;
 
-	void add(AppEntity elem) throws PatientsManagerException, ValidatorException;
+	void add(Entity elem) throws PatientsManagerException, ValidatorException;
 
 	List<Patient> getPatientsWithDisease(String disease) throws PatientsManagerException;
 

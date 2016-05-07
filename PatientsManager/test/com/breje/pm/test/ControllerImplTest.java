@@ -17,11 +17,13 @@ import com.breje.pm.exception.PatientsManagerException;
 import com.breje.pm.exception.ValidatorException;
 import com.breje.pm.model.Patient;
 import com.breje.pm.persistance.Repository;
-import com.breje.pm.persistance.mock.RepositoryMock;
+import com.breje.pm.persistance.mock.ConsultationRepositoryMock;
+import com.breje.pm.persistance.mock.PatientRepositoryMock;
 
 public class ControllerImplTest {
 
-	private static Repository repository = null;
+	private static Repository patientRepository = null;
+	private static Repository consultationRepository = null;
 	private static Controller controller = null;
 	private Patient patient1 = null;
 	private Patient patient2 = null;
@@ -29,9 +31,10 @@ public class ControllerImplTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		System.out.println("Test cases for Controller workflow had been started.");
-		repository = new RepositoryMock();
+		consultationRepository = new ConsultationRepositoryMock();
+		patientRepository = new PatientRepositoryMock();
 		System.out.println("Repository of application has been initialized.");
-		controller = new ControllerImpl(repository);
+		controller = new ControllerImpl(patientRepository, consultationRepository);
 		System.out.println("Controller of application has been initialized.");
 	}
 
@@ -39,7 +42,8 @@ public class ControllerImplTest {
 	public static void tearDownAfterClass() throws Exception {
 		controller = null;
 		System.out.println("Controller of application has been disposed.");
-		repository = null;
+		patientRepository = null;
+		consultationRepository = null;
 		System.out.println("Repository of application has been disposed.");
 		System.out.println("Test cases for Controller workflow had been finished.");
 	}

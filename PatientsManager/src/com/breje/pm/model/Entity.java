@@ -3,7 +3,7 @@ package com.breje.pm.model;
 /**
  * Created by Raul Breje on 03/22/2016.
  */
-public interface AppEntity {
+public interface Entity {
 
 	String toString();
 
