@@ -19,11 +19,11 @@ public class PatientRepositoryMock extends AbstractRepository implements Reposit
 	}
 
 	private void initMock() {
-		Patient p1 = new Patient("First User", "1900909314010", "First Hometown");
-		Patient p2 = new Patient("Second User", "1911010354010", "Second Hometown");
-		Patient p3 = new Patient("Third User", "1921112344010", "Third Hometown");
-		Patient p4 = new Patient("Fourth User", "1931213334010", "Fourth Hometown");
-		Patient p5 = new Patient("Fifth User", "1940114324010", "Fifth Hometown");
+		Patient p1 = new Patient("First User", "1900909314010", "First Hometown4");
+		Patient p2 = new Patient("Second User", "1911010354010", "Second Hometown5");
+		Patient p3 = new Patient("Third User", "1921112344010", "Third Hometown6");
+		Patient p4 = new Patient("Fourth User", "1931213334010", "Fourth Hometown7");
+		Patient p5 = new Patient("Fifth User", "1940114324010", "Fifth Hometown8");
 		patients.add(p1);
 		patients.add(p2);
 		patients.add(p3);

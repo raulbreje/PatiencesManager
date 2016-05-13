@@ -12,9 +12,7 @@ import com.breje.pm.persistance.impl.RepositoryImpl;
 public class Starter {
 
 	public static void main(String[] args) {
-		@Deprecated
-		Repository repository = new RepositoryImpl("persistance/pat.txt", "persistance/cons.txt");
-		@Deprecated
+//		Repository repository = new RepositoryImpl("persistance/pat.txt", "persistance/cons.txt");
 		// Controller controller = new ControllerImpl(repository);
 
 		Repository patientRepository = new PatientRepository("persistance/pat.txt");

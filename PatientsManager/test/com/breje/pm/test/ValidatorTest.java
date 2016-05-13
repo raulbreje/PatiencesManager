@@ -2,6 +2,10 @@ package com.breje.pm.test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -9,8 +13,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.breje.pm.exception.ValidatorException;
+import com.breje.pm.model.Consultation;
 import com.breje.pm.model.Patient;
 import com.breje.pm.model.Validator;
+import com.breje.pm.util.AppHelper;
 
 public class ValidatorTest {
 
@@ -23,6 +29,11 @@ public class ValidatorTest {
 	private Patient patient7 = null;
 	private Patient patient8 = null;
 	private Patient patient9 = null;
+
+	private Consultation consultation1 = null;
+	private Consultation consultation2 = null;
+	private Consultation consultation3 = null;
+	private Consultation consultation4 = null;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -45,6 +56,15 @@ public class ValidatorTest {
 		patient7 = new Patient("dd", "1990921314010", "acasa3");
 		patient8 = new Patient("aaaaaaaaaaaaaaaaaaaaaaaa", "1990921314010", "acasa3");
 		patient9 = new Patient("/.,s", "1990921314010", "acasa3");
+		List<String> meds = new ArrayList<>();
+		List<String> meeds = new ArrayList<>();
+		meds.add("mdes1");
+		LocalDate date = LocalDate.parse("May 10 2016", AppHelper.DATE_FORMAT);
+		consultation1 = new Consultation(null, "d1", meds, date);
+		consultation2 = new Consultation("1900101010000", null, meds, date);
+		consultation3 = new Consultation("1900101010000", "d1", meeds, date);
+		consultation4 = new Consultation("1900101010000", "d1", meds, date);
+		
 	}
 
 	@After
@@ -159,4 +179,49 @@ public class ValidatorTest {
 		}
 		assertTrue(isInvalid);
 	}
+
+	@Test
+	public void testValidateConsultation1() {
+		boolean isInvalid = false;
+		try {
+			Validator.validateConsultation(consultation1);
+		} catch (ValidatorException e) {
+			isInvalid = true;
+		}
+		assertTrue(isInvalid);
+	}
+
+	@Test
+	public void testValidateConsultation2() {
+		boolean isInvalid = false;
+		try {
+			Validator.validateConsultation(consultation2);
+		} catch (ValidatorException e) {
+			isInvalid = true;
+		}
+		assertTrue(isInvalid);
+	}
+
+	@Test
+	public void testValidateConsultation3() {
+		boolean isInvalid = false;
+		try {
+			Validator.validateConsultation(consultation3);
+		} catch (ValidatorException e) {
+			isInvalid = true;
+		}
+		assertTrue(isInvalid);
+	}
+
+	@Test
+	public void testValidateConsultation4() {
+		boolean isInvalid = true;
+		try {
+			Validator.validateConsultation(consultation4);
+		} catch (ValidatorException e) {
+			isInvalid = false;
+		}
+		assertTrue(isInvalid);
+	}
+
 }

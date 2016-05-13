@@ -1,9 +1,10 @@
-18, 1940923314010, disease1, meds1 \ \ \ \ \ \ \ \ \ \+ meds2 \ \ \ \ \ \ \ \ \ \+ meds3, Apr 17 2016
-19, 2940914314011, disease2, meds4 \ \ \ \ \ \ \ \ \+ meds5 \ \ \ \ \ \ \ \ \+ meds6, Apr 30 2016
-20, 1940606314009, disease1, meds1 \ \ \ \ \ \ \ \+ meds4 \ \ \ \ \ \ \ \+ meds7, May 04 2016
-21, 1900101314000, disease1, meds1 \ \ \ \ \ \ \+ meds2, May 03 2016
-22, 1990721310000, disease1, meds1, Apr 01 2016
-23, 2940914314011, disease3, meds10 \ \ \ \ \+ meds11, May 03 2016
-24, 1990721310000, disease1, meds13 \ \ \ \+ meds15, Apr 06 2016
-25, 1940606314009, disease1, meds1, May 01 2016
-17, 1900101010000, disease1, med1 \+ meds3 \+ meds5, May 06 2016
+10, 1940923314010, disease1, meds1 \ \ \ \ \ \ \ \ \ \ \+ meds2 \ \ \ \ \ \ \ \ \ \ \+ meds3, Apr 17 2016
+11, 2940914314011, disease2, meds4 \ \ \ \ \ \ \ \ \ \+ meds5 \ \ \ \ \ \ \ \ \ \+ meds6, Apr 30 2016
+12, 1940606314009, disease1, meds1 \ \ \ \ \ \ \ \ \+ meds4 \ \ \ \ \ \ \ \ \+ meds7, May 04 2016
+13, 1900101314000, disease1, meds1 \ \ \ \ \ \ \ \+ meds2, May 03 2016
+14, 1990721310000, disease1, meds1, Apr 01 2016
+15, 2940914314011, disease3, meds10 \ \ \ \ \ \+ meds11, May 03 2016
+16, 1990721310000, disease1, meds13 \ \ \ \ \+ meds15, Apr 06 2016
+17, 1940606314009, disease1, meds1, May 01 2016
+18, 1900101010000, disease1, med1 \ \+ meds3 \ \+ meds5, May 06 2016
+9, 1900101010000, disease1, meds1 \+ meds2, May 12 2016

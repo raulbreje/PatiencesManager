@@ -129,10 +129,6 @@ public class RepositoryImpl implements Repository {
 		}
 	}
 
-	public List<Entity> getEntities(ObjectTypes type) throws PatientsManagerException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void save(Entity elem) throws PatientsManagerException {

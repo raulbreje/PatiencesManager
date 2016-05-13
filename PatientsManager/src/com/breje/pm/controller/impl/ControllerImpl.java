@@ -89,12 +89,24 @@ public class ControllerImpl implements Controller {
 
 	private void addPatient(Patient patient) throws ValidatorException, PatientsManagerException {
 		Validator.validatePerson(patient);
+		try {
+			getPatientBySSN(patient.getSSN());
+		} catch (Exception e) {
+			throw e;
+		}
+		// if (patients == null) {
+		// patients = (List<Patient>) patientsRepository.getEntities();
+		// }
 		patients.add(patient);
 		patientsRepository.save(patient);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void addConsultation(Consultation consultation) throws PatientsManagerException, ValidatorException {
 		Validator.validateConsultation(consultation);
+		if (consultations == null) {
+			consultations = (List<Consultation>) consultationsRepository.getEntities();
+		}
 		consultations.add(consultation);
 		consultationsRepository.save(consultation);
 		Patient p = getPatientBySSN(consultation.getPatientSSN());

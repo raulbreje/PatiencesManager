@@ -50,8 +50,8 @@ public class ControllerImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		patient1 = new Patient("First User", "1990921314010", "acasa la el3");
-		patient2 = new Patient("Second User", "1890623336023", "acasa tot la el3");
+		patient1 = new Patient("First User", "1590921314010", "acasa la el3");
+		patient2 = new Patient("Second User", "1690623336023", "acasa tot la el3");
 		System.out.println("Test case has been set up.");
 	}
 
